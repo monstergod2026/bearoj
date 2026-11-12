@@ -23,20 +23,21 @@ public:
         pid_t pid = fork();
         if (pid < 0)
         {
+            
             Log(error);
             exit(1);
         }
         else if (pid == 0)
         {
-
-            int stderr_ = open(PathUtil::GetStderrPatn(compilefile).c_str(), O_CREAT | O_RDWR | O_APPEND, 0644);
-            if (stderr_ < 0)
+            umask(0);
+            int compileerr_ = open(PathUtil::GetComperrPatn(compilefile).c_str(), O_CREAT | O_RDWR, 0644);
+            if (compileerr_ < 0)
             {
                 // todo
                 Log(warning) << "std文件没有生成" << std::endl;
             }
 
-            dup2(stderr_, 2); //输入到本地错误文件
+            dup2(compileerr_, 2); //输入到本地错误文件
 
             // g++ -o 目标文件 源文件 -std=c++11 重定向
             execlp("g++", "g++", "-o", PathUtil::GetExePatn(compilefile).c_str(),
