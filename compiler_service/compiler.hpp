@@ -23,7 +23,7 @@ public:
         pid_t pid = fork();
         if (pid < 0)
         {
-            
+
             Log(error);
             exit(1);
         }
@@ -50,7 +50,7 @@ public:
         {
             waitpid(pid, nullptr, 0);
 
-            if (FileUtil::IfFileExist(compilefile))
+            if (FileUtil::IfFileExist(PathUtil::GetExePatn(compilefile)))
             {
                 Log(info) << "程序正常输出" << std::endl;
                 return true; //有文件

@@ -12,6 +12,46 @@ class compiler_and_run
 public:
     compiler_and_run();
     ~compiler_and_run();
+    //清理文件
+    static void RemoveAllTemp(const string& filename)
+    {
+        //删除可能生成的文件 .cpp .comperr .exe .stdin .stdout .stderr
+        string _source = PathUtil::GetSourcePatn(filename);
+        if (!FileUtil::IfFileExist(_source))
+        {
+            unlink(_source.c_str());
+        }
+
+        string _comperr = PathUtil::GetComperrPatn(filename);
+        if (!FileUtil::IfFileExist(_comperr))
+        {
+            unlink(_comperr.c_str());
+        }
+
+        string _exe = PathUtil::GetExePatn(filename);
+        if (!FileUtil::IfFileExist(_exe))
+        {
+            unlink(_exe.c_str());
+        }
+
+        string _stderr = PathUtil::GetStderrPath(filename);
+        if (!FileUtil::IfFileExist(_stderr))
+        {
+            unlink(_stderr.c_str());
+        }
+
+        string _stdin = PathUtil::GetStdinPath(filename);
+        if (!FileUtil::IfFileExist(_stdin))
+        {
+            unlink(_stdin.c_str());
+        }
+
+        string _stdout = PathUtil::GetStdoutPath(filename);
+        if (!FileUtil::IfFileExist(_stdout))
+        {
+            unlink(_comperr.c_str());
+        }
+    }
     //状态码转为原因
     static string CodeToResult(int code, const string& filename)
     {
@@ -117,7 +157,7 @@ public:
         }
         Json::StyledWriter writer;
         *out_json = writer.write(out_value);
-        
+        RemoveAllTemp(filename);
     }
 };
 
