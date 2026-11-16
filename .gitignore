@@ -69,5 +69,6 @@ Testing/
 
 # Compiler service build and runtime output
 /compiler_service/run
+/oj/run
 /compiler_service/Temp/
 /oj/question/
