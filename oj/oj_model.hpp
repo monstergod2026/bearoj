@@ -56,7 +56,7 @@ public:
             q.mem_limit = atoi(token[4].c_str());
             string path = questionpath + q.id;
             path += "/";
-            FileUtil::ReadFile(path + "dessc.txt", &(q.desc), true);
+            FileUtil::ReadFile(path + "desc.txt", &(q.desc), true);
             FileUtil::ReadFile(path + "header.cpp", &(q.header), true);
             FileUtil::ReadFile(path + "tail.cpp", &(q.tail), true);
             questions.insert({q.id, q});
