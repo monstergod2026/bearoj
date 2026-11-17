@@ -72,3 +72,5 @@ Testing/
 /oj/run
 /compiler_service/Temp/
 /oj/question/
+/oj/template/
+/oj/wwwroot/

@@ -35,6 +35,7 @@ public:
         std::ifstream in(list);
         if (!in.is_open())
         {
+            Log(error) << "打开题目清单失败" << std::endl;
             return false;
         }
         string message;
@@ -55,22 +56,27 @@ public:
             q.mem_limit = atoi(token[4].c_str());
             string path = questionpath + q.id;
             path += "/";
-            FileUtil::ReadFile(path + "dessc.txt", &q.desc, true);
-            FileUtil::ReadFile(path + "header.cpp", &q.header, true);
-            FileUtil::ReadFile(path + "tail.cpp", &q.tail, true);
+            FileUtil::ReadFile(path + "dessc.txt", &(q.desc), true);
+            FileUtil::ReadFile(path + "header.cpp", &(q.header), true);
+            FileUtil::ReadFile(path + "tail.cpp", &(q.tail), true);
+            questions.insert({q.id, q});
         }
+        Log(info) << "题库加载成功" << std::endl;
+        return true;
     }
-    ~Model();
-    bool GetAllQuestion(vector<question>& v)
+    ~Model() {}
+    bool GetAllQuestion(vector<question>* v)
     {
         if (questions.empty())
         {
+            Log(error) << "题目为空" << std::endl;
             return false;
         }
         for (const auto& e : questions)
         {
-            v.push_back(e.second);
+            v->push_back(e.second);
         }
+        Log(info) << "已获取所有题目" << std::endl;
         return true;
     }
     bool GetNumQusetion(string id, struct question* ques)
@@ -78,11 +84,14 @@ public:
         auto it = questions.find(id);
         if (it == questions.end())
         {
+            Log(error) << "该题目不存在" << std::endl;
             return false;
         }
+        Log(info) << "已获取对应题目" << std::endl;
         *ques = it->second;
+        return true;
     }
-    bool GetAnswer() {}
+    bool GetAnswer() { return true; }
 
 private:
     std::unordered_map<std::string, question> questions;
