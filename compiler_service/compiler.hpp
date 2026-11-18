@@ -41,7 +41,7 @@ public:
 
             // g++ -o 目标文件 源文件 -std=c++11 重定向
             execlp("g++", "g++", "-o", PathUtil::GetExePatn(compilefile).c_str(),
-                   PathUtil::GetSourcePatn(compilefile).c_str(), "-std=c++11", nullptr);
+                   PathUtil::GetSourcePatn(compilefile).c_str(), "-std=c++11", "-D", "COMPILER_ONLINE", nullptr);
 
             Log(error) << "程序替换崩溃" << std::endl;
             exit(2);
