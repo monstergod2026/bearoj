@@ -5,10 +5,17 @@
 using namespace httplib;
 using namespace core_control;
 using std::string;
+static Control* ctrl_ptr = nullptr;
+void handler(int sighno)
+{
+    ctrl_ptr->RestartService();
+}
 int main()
 {
+    signal(SIGINT, handler);
     Server server;
     Control ctrl;
+    ctrl_ptr = &ctrl;
     server.Get("/all_questions",
                [&ctrl](const Request& req, Response& res)
                {

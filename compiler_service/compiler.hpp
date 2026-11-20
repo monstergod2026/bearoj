@@ -24,8 +24,8 @@ public:
         if (pid < 0)
         {
 
-            Log(error);
-            exit(1);
+            Log(error) << "编译程序出错" << std::endl;
+            return false;
         }
         else if (pid == 0)
         {
@@ -35,6 +35,7 @@ public:
             {
                 // todo
                 Log(warning) << "std文件没有生成" << std::endl;
+                exit(1);
             }
 
             dup2(comperr_, 2); //输入到本地错误文件

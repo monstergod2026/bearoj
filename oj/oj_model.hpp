@@ -87,7 +87,7 @@ public:
             Log(error) << "该题目不存在" << std::endl;
             return false;
         }
-        Log(info) << "已获取对应题目" << std::endl;
+        // Log(info) << "已获取对应题目" << std::endl;
         *ques = it->second;
         return true;
     }
